@@ -1,5 +1,5 @@
 # key_map contains the google public key
-key_map.txt
+key_file.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
