@@ -119,8 +119,8 @@ header .header-content .header-content-inner p {
 }
 
 hr{
-    margin-left: 325px;
-    margin-right: 325px;
+    margin-left: 305px;
+    margin-right: 305px;
     border-style: ridge;
 }
 
@@ -137,7 +137,7 @@ hr{
     color: #fff;
     font-size: 2em;
     padding-top: 125px;
-    padding-bottom: 30px
+    padding-bottom: 30px;
     margin-bottom: 50px;
 }
 
@@ -155,7 +155,7 @@ hr{
 }
 
 #pMod{
-  padding-left: 20px
+  padding-left: 20px;
 }
 
 #moveMe{
@@ -180,3 +180,45 @@ hr{
   padding: 0;
   padding-top: 7px;
 }
+
+
+/* Nav bar font stuff */
+
+.main-header .logo {
+  font-size: 2em;
+  line-height: 50px;
+  text-align: center;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight: 300;
+  text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+             0px 8px 13px rgba(0,0,0,0.1),
+             0px 18px 23px rgba(0,0,0,0.1);
+  letter-spacing: -1px;
+
+}
+#moveMe{
+  margin-top: 25px;
+  margin-left: 25px;
+}
+
+#profilePicture{
+  margin-top: 25px;
+  margin-left: 25px;
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+#hideMe{
+  overflow: hidden;
+}
+
+#profileInfo{
+
+
+}
+
+/*
+col-xs-12 col-sm-12 col-md-12 col-lg-12 t
+*/
