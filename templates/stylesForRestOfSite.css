@@ -202,21 +202,14 @@ hr{
 }
 
 #profilePicture{
-  margin-top: 25px;
-  margin-left: 25px;
   width: 250px;
   height: 250px;
   object-fit: cover;
   overflow: hidden;
 }
 
-#hideMe{
-  overflow: hidden;
-}
-
 #profileInfo{
-
-
+  
 }
 
 /*
