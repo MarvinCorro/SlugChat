@@ -1,12 +1,16 @@
+<!-- Google Sign in info found at: -->
+<!-- https://developers.google.com/identity/sign-in/web/sign-in -->
 <body>
     <!-- Load google platform library -->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-<meta name="google-signin-client_id" content="">
+    <meta name="google-signin-client_id" content="{{ GOOGLE_KEY }}">
 
     <!-- Make sign in button -->
     <div class="g-signin2" data-width="200px" data-onsuccess="onSignIn"></div>
 
+    <!-- Make sign out button -->
+    <a href="#" onclick="signOut();">Sign out</a>
     <script>
         function onSignIn(googleUser) {
           var profile = googleUser.getBasicProfile();
@@ -14,6 +18,36 @@
           console.log('Name: ' + profile.getName());
           console.log('Image URL: ' + profile.getImageUrl());
           console.log('Email: ' + profile.getEmail());
+        }
+
+        function signOut() {
+          var auth2 = gapi.auth2.getAuthInstance();
+          auth2.signOut().then(function () {
+            console.log('User signed out.');
+          });
+        }
+
+        // Found at http://stackoverflow.com/a/133997
+        function post(path, params, method) {
+            method = method || "post"; // Set method to post by default if not specified.
+
+            var form = document.createElement("form");
+            form.setAttribute("method", method);
+            form.setAttribute("action", path);
+
+            for(var key in params) {
+                if(params.hasOwnProperty(key)) {
+                    var hiddenField = document.createElement("input");
+                    hiddenField.setAttribute("type", "hidden");
+                    hiddenField.setAttribute("name", key);
+                    hiddenField.setAttribute("value", params[key]);
+
+                    form.appendChild(hiddenField);
+                }
+            }
+
+            document.body.appendChild(form);
+            form.submit();
         }
     </script>
 </body>
