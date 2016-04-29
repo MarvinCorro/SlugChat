@@ -14,8 +14,12 @@ class User(models.Model):
         lastName = models.CharField(max_length=50)
 #        school = models.CharField(max_length=50)
 #        studentID = models.CharField(max_length=10)
-        email = models.CharField(max_length=50)
+        email = models.CharField(max_length=50, unique=True)
 #        status = models.CharField(max_length=2, choices=statusChoices, default=STUDENT)
+
+        # Prevent duplicate entries
+        class Meta:
+            unique_together = ["firstName", "lastName", "email"]
 
         def __str__(self):
             return self.firstName

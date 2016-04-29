@@ -20,8 +20,9 @@ def tokensignin(request):
     last_name = request.POST['last_name']
     email_address = request.POST['email_address']
     print(first_name, last_name, email_address)
-    user_info = User(firstName=first_name,lastName=last_name,
-        email=email_address)
-    user_info.save()
+    if(not User.objects.filter(firstName=first_name,lastName=last_name,
+        email=email_address).exists()):
+        user_info = User(firstName=first_name,lastName=last_name,
+            email=email_address)
+        user_info.save()
     return render(request, 'login/tokensignin.html')
-
