@@ -9,7 +9,7 @@ class User(models.Model):
 #                (PROFESSOR, 'Professor'),
 #                (STUDENT, 'Student'),
 #        )
-        username = models.CharField(max_length=50)
+#        username = models.CharField(max_length=50)
         firstName = models.CharField(max_length=50)
         lastName = models.CharField(max_length=50)
 #        school = models.CharField(max_length=50)
@@ -18,7 +18,7 @@ class User(models.Model):
 #        status = models.CharField(max_length=2, choices=statusChoices, default=STUDENT)
 
         def __str__(self):
-            return self.user_text
+            return self.firstName
 
 #class Course(models.Model):
 #        # these field points to tuple in User DB
