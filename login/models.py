@@ -1,28 +1,31 @@
 from django.db import models
+from django.forms import ModelForm
 
 class User(models.Model):
-#        TA = "TA"
-#        PROFESSOR = "PR"
-#        STUDENT = "ST"
-#        statusChoices = (
-#                (TA, 'Teaching Assistant'),
-#                (PROFESSOR, 'Professor'),
-#                (STUDENT, 'Student'),
-#        )
+        TA = "TA"
+        PROFESSOR = "PR"
+        STUDENT = "ST"
+        statusChoices = (
+                (TA, 'Teaching Assistant'),
+                (PROFESSOR, 'Professor'),
+                (STUDENT, 'Student'),
+        )
 #        username = models.CharField(max_length=50)
         firstName = models.CharField(max_length=50)
         lastName = models.CharField(max_length=50)
-#        school = models.CharField(max_length=50)
-#        studentID = models.CharField(max_length=10)
+        school = models.CharField(max_length=50)
+        studentID = models.CharField(max_length=10)
         email = models.CharField(max_length=50, unique=True)
-#        status = models.CharField(max_length=2, choices=statusChoices, default=STUDENT)
+        status = models.CharField(max_length=2, choices=statusChoices, default=STUDENT)
+        completeProfile = models.BooleanField(default=False)
 
         # Prevent duplicate entries
         class Meta:
-            unique_together = ["firstName", "lastName", "email"]
+            unique_together = ['firstName', 'lastName']
 
         def __str__(self):
             return self.firstName
+
 
 #class Course(models.Model):
 #        # these field points to tuple in User DB

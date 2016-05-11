@@ -1,4 +1,9 @@
-from django import forms
+# See https://docs.djangoproject.com/en/1.9/topics/forms/modelforms/
+from django.forms import ModelForm
 
-class ProfileForm(forms.Form):
-    your_name = forms.CharField(label='Your name', max_length=100)
+from .models import User
+
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['school', 'studentID', 'status']

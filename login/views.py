@@ -3,9 +3,10 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.conf import settings
 from login.models import User
+from login.forms import UserForm
 import os
 
-from .forms import ProfileForm
+from .forms import UserForm
 
 def index(request):
     try:
@@ -14,6 +15,9 @@ def index(request):
     except IOError:
         GOOGLE_KEY = None
         print("key_file not found. \nMessage Ckyle for key_file.txt")
+    if(not User.objects.filter(email=request.session['email_address'],
+            completeProfile=True).exists()):
+        return HttpResponseRedirect('/login/buildprofile/')
     context = {'GOOGLE_KEY' : GOOGLE_KEY }
     return render(request, 'login/index.html', context)
 
@@ -22,21 +26,25 @@ def tokensignin(request):
     first_name = request.POST['first_name']
     last_name = request.POST['last_name']
     email_address = request.POST['email_address']
+
+    request.session['email_address'] = email_address
+
     print(first_name, last_name, email_address)
-    if(not User.objects.filter(firstName=first_name,lastName=last_name,
-        email=email_address).exists()):
+    # New user who has never signed in before
+    if(not User.objects.filter(email=email_address).exists()):
         user_info = User(firstName=first_name,lastName=last_name,
             email=email_address)
         user_info.save()
-    return render(request, 'login/tokensignin.html')
 
 # See https://docs.djangoproject.com/en/1.9/topics/forms/
 # for an explanation of the following code.
 def buildprofile(request):
 # if this is a POST request we need to process the form data
+    email_address = request.session['email_address']
+    instance = User.objects.get(email=email_address)
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = ProfileForm(request.POST)
+        form = UserForm(request.POST, instance=instance)
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
@@ -46,6 +54,6 @@ def buildprofile(request):
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = ProfileForm()
+        form = UserForm(instance=instance)
 
     return render(request, 'buildprofile.html', {'form': form})
