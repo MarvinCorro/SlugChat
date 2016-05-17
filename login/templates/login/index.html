@@ -1,11 +1,15 @@
 <!-- This file reproduces code found at: -->
 <!-- https://developers.google.com/identity/sign-in/web/sign-in -->
 <body>
+
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+
     <!-- Load google platform library -->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <meta name="google-signin-client_id" content="{{ GOOGLE_KEY }}">
 
+    <div id="my-signin2"></div>
     <!-- Make sign in button -->
     <div class="g-signin2" data-width="200px" data-onsuccess="onSignIn"></div>
 
@@ -33,6 +37,25 @@
           };
           xhr.send("first_name="+firstname+"&last_name="+lastname+"&email_address="+email);
         }
+
+    function onSuccess(googleUser) {
+      window.location = "http://localhost:8000/login/buildprofile"
+      console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+    }
+    function onFailure(error) {
+      console.log(error);
+    }
+    function renderButton() {
+      gapi.signin2.render('my-signin2', {
+        'scope': 'profile email',
+        'width': 240,
+        'height': 50,
+        'longtitle': true,
+        'theme': 'dark',
+        'onsuccess': onSuccess,
+        'onfailure': onFailure
+      });
+    }
 
         // auth2 is initialized with gapi.auth2.init() and a user is signed in.
        // if (auth2.isSignedIn.get()) {
