@@ -41,10 +41,11 @@ def buildprofile(request):
     if 'email_address' not in request.session:
         return HttpResponseRedirect('/login/')
     email_address = request.session['email_address']
-    print("email addr = ", email_address)
 
+    # If this user's profile is complete, redirect to profile page
+    # TODO: move profile page out of login app
     if(User.objects.filter(email=email_address, completeProfile=True).exists()):
-        return HttpResponseRedirect('/profile/')
+        return HttpResponseRedirect('/login/profile/')
 
     instance = User.objects.get(email=email_address)
     if request.method == 'POST':
@@ -56,7 +57,7 @@ def buildprofile(request):
             instance.completeProfile = True
             form.save()
             # redirect to a new URL:
-            return HttpResponseRedirect('/profile/')
+            return HttpResponseRedirect('/login/profile/')
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -64,3 +65,14 @@ def buildprofile(request):
 
     return render(request, 'buildprofile.html', {'form': form})
 
+def profile(request):
+    email_address = request.session['email_address']
+    instance = User.objects.get(email=email_address)
+
+    context = {'full_name' : instance.firstName + " " + instance.lastName,
+               'school'    : instance.school,
+               'studentID' : instance.studentID,
+               'email'     : instance.email,
+               'status'    : instance.status }
+
+    return render(request, 'profile.html', context)
