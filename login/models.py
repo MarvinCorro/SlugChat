@@ -10,7 +10,6 @@ class User(models.Model):
                 (PROFESSOR, 'Professor'),
                 (STUDENT, 'Student'),
         )
-#        username = models.CharField(max_length=50)
         firstName = models.CharField(max_length=50)
         lastName = models.CharField(max_length=50)
         school = models.CharField(max_length=50)
