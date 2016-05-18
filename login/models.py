@@ -16,6 +16,8 @@ class User(models.Model):
         studentID = models.CharField(max_length=10)
         email = models.CharField(max_length=50, unique=True)
         status = models.CharField(max_length=2, choices=statusChoices, default=STUDENT)
+        profile_pic = models.CharField(max_length=200, default='N/A')
+        email = models.CharField(max_length=50, unique=True)
         completeProfile = models.BooleanField(default=False)
 
         # Prevent duplicate entries

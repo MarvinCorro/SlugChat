@@ -14,27 +14,25 @@
 
     <!-- Make sign out button -->
     <a href="#" onclick="signOut();">Sign out</a>
+
     <script>
     function onSuccess(googleUser) {
           var id_token = googleUser.getAuthResponse().id_token;
           var profile = googleUser.getBasicProfile();
-          console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-          console.log('Name: ' + profile.getName());
-          console.log('Given Name: ' + profile.getGivenName());
-          console.log('Image URL: ' + profile.getImageUrl());
-          console.log('Email: ' + profile.getEmail());
 
           var firstname = profile.getGivenName();
           var lastname = profile.getFamilyName();
           var email = profile.getEmail();
+          var profile_pic = profile.getImageUrl();
+          console.log('Family Name: ' + profile.getImageUrl());
 
           var xhr = new XMLHttpRequest();
-          xhr.open('POST', 'http://localhost:8000/login/tokensignin/');
+          xhr.open('POST', 'http://localhost:8000/login/tokensignin/', false);
           xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
           xhr.onload = function() {
             console.log('Signed in as: ' + xhr.responseText);
           }
-          xhr.send("first_name="+firstname+"&last_name="+lastname+"&email_address="+email);
+          xhr.send("first_name="+firstname+"&last_name="+lastname+"&email_address="+email+"&profile_pic="+profile_pic);
 
           window.location = "http://localhost:8000/login/buildprofile"
         }
@@ -61,7 +59,6 @@
        //   console.log('Full Name: ' + profile.getName());
        //   console.log('Given Name: ' + profile.getGivenName());
        //   console.log('Family Name: ' + profile.getFamilyName());
-       //   console.log('Image URL: ' + profile.getImageUrl());
        //   console.log('Email: ' + profile.getEmail());
        // }
 

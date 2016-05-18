@@ -25,14 +25,13 @@ def tokensignin(request):
     first_name = request.POST['first_name']
     last_name = request.POST['last_name']
     email_address = request.POST['email_address']
-    print("EMAIL ADDr ++++ = ", email_address)
+    profile_pic = request.POST['profile_pic']
     request.session['email_address'] = email_address
 
-    print(first_name, last_name, email_address)
     # New user who has never signed in before
     if(not User.objects.filter(email=email_address).exists()):
         user_info = User(firstName=first_name,lastName=last_name,
-            email=email_address)
+            email=email_address,profile_pic=profile_pic)
         user_info.save()
     return HttpResponse(status=204)
 
@@ -41,12 +40,6 @@ def tokensignin(request):
 def buildprofile(request):
 # if this is a POST request we need to process the form data
 
-    # TODO: On first logging in, this will force a redirect back
-    # to login, because tokensignin does not set the session variable
-    # quickly enough. Maybe add a timer.
-    if 'email_address' not in request.session:
-        print("email_address not in request.session")
-        return HttpResponseRedirect('/login/')
     email_address = request.session['email_address']
 
     # If this user's profile is complete, redirect to profile page
@@ -76,10 +69,11 @@ def profile(request):
     email_address = request.session['email_address']
     instance = User.objects.get(email=email_address)
 
-    context = {'full_name' : instance.firstName + " " + instance.lastName,
-               'school'    : instance.school,
-               'studentID' : instance.studentID,
-               'email'     : instance.email,
-               'status'    : instance.status }
+    context = {'full_name'   : instance.firstName + " " + instance.lastName,
+               'school'      : instance.school,
+               'studentID'   : instance.studentID,
+               'email'       : instance.email,
+               'status'      : instance.status,
+               'profile_pic' : instance.profile_pic }
 
     return render(request, 'login/profile.html', context)
