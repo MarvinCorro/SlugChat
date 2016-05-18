@@ -8,6 +8,7 @@ import os
 
 from .forms import UserForm
 
+
 def index(request):
     try:
         with open('key_file.txt', 'r') as f:
@@ -38,13 +39,17 @@ def tokensignin(request):
 # for an explanation of the following code.
 def buildprofile(request):
 # if this is a POST request we need to process the form data
+
+    # TODO: On first logging in, this will force a redirect back
+    # to login, because tokensignin does not set the session variable
+    # quickly enough. Maybe add a timer.
     if 'email_address' not in request.session:
         return HttpResponseRedirect('/login/')
     email_address = request.session['email_address']
 
     # If this user's profile is complete, redirect to profile page
     # TODO: move profile page out of login app
-    if(User.objects.filter(email=email_address, completeProfile=True).exists()):
+    if (not request.GET.get('update', '') == 'true') and User.objects.filter(email=email_address, completeProfile=True).exists():
         return HttpResponseRedirect('/login/profile/')
 
     instance = User.objects.get(email=email_address)
@@ -63,7 +68,7 @@ def buildprofile(request):
     else:
         form = UserForm(instance=instance)
 
-    return render(request, 'buildprofile.html', {'form': form})
+    return render(request, 'login/buildprofile.html', {'form': form})
 
 def profile(request):
     email_address = request.session['email_address']
@@ -75,4 +80,4 @@ def profile(request):
                'email'     : instance.email,
                'status'    : instance.status }
 
-    return render(request, 'profile.html', context)
+    return render(request, 'login/profile.html', context)

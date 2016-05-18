@@ -26,7 +26,6 @@ class User(models.Model):
         def __str__(self):
             return self.firstName
 
-
 #class Course(models.Model):
 #        # these field points to tuple in User DB
 #        professor = models.ForeignKey(
