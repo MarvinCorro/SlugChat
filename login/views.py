@@ -69,11 +69,18 @@ def profile(request):
     email_address = request.session['email_address']
     instance = User.objects.get(email=email_address)
 
+    if instance.status == 'ST':
+        status = 'Student'
+    elif instance.status == 'TA':
+        status = 'Teaching Assistant'
+    else
+        status = 'Professor'
+
     context = {'full_name'   : instance.firstName + " " + instance.lastName,
                'school'      : instance.school,
                'studentID'   : instance.studentID,
                'email'       : instance.email,
-               'status'      : instance.status,
+               'status'      : status,
                'profile_pic' : instance.profile_pic }
 
     return render(request, 'login/profile.html', context)

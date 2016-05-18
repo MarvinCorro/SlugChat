@@ -2,15 +2,17 @@
 <!-- https://developers.google.com/identity/sign-in/web/sign-in -->
 <body>
 
+    <!-- Get the data needed to display google login button -->
     <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 
     <!-- Load google platform library -->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
+    <!-- Secret Client Key must be in SlugChat/key_file.txt -->
     <meta name="google-signin-client_id" content="{{ GOOGLE_KEY }}">
 
-    <div id="my-signin2"></div>
     <!-- Make sign in button -->
+    <div id="my-signin2"></div>
 
     <!-- Make sign out button -->
     <a href="#" onclick="signOut();">Sign out</a>
@@ -24,17 +26,16 @@
           var lastname = profile.getFamilyName();
           var email = profile.getEmail();
           var profile_pic = profile.getImageUrl();
-          console.log('Family Name: ' + profile.getImageUrl());
 
           var xhr = new XMLHttpRequest();
-          xhr.open('POST', 'http://localhost:8000/login/tokensignin/', false);
+          xhr.open('POST', 'http://localhost:8000/login/tokensignin/');
           xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
           xhr.onload = function() {
             console.log('Signed in as: ' + xhr.responseText);
+            window.location = "http://localhost:8000/login/buildprofile"
           }
           xhr.send("first_name="+firstname+"&last_name="+lastname+"&email_address="+email+"&profile_pic="+profile_pic);
 
-          window.location = "http://localhost:8000/login/buildprofile"
         }
 
     function onFailure(error) {
