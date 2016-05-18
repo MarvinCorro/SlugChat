@@ -1,6 +1,7 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.conf import settings
 from login.models import User
 from login.forms import UserForm
@@ -33,7 +34,7 @@ def tokensignin(request):
         user_info = User(firstName=first_name,lastName=last_name,
             email=email_address)
         user_info.save()
-    return HttpResponseRedirect('ok')
+    return HttpResponse(status=204)
 
 # See https://docs.djangoproject.com/en/1.9/topics/forms/
 # for an explanation of the following code.
@@ -44,6 +45,7 @@ def buildprofile(request):
     # to login, because tokensignin does not set the session variable
     # quickly enough. Maybe add a timer.
     if 'email_address' not in request.session:
+        print("email_address not in request.session")
         return HttpResponseRedirect('/login/')
     email_address = request.session['email_address']
 

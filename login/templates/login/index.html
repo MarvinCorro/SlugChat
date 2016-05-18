@@ -11,12 +11,11 @@
 
     <div id="my-signin2"></div>
     <!-- Make sign in button -->
-    <div class="g-signin2" data-width="200px" data-onsuccess="onSignIn"></div>
 
     <!-- Make sign out button -->
     <a href="#" onclick="signOut();">Sign out</a>
     <script>
-        function onSignIn(googleUser) {
+    function onSuccess(googleUser) {
           var id_token = googleUser.getAuthResponse().id_token;
           var profile = googleUser.getBasicProfile();
           console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -34,14 +33,12 @@
           xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
           xhr.onload = function() {
             console.log('Signed in as: ' + xhr.responseText);
-          };
+          }
           xhr.send("first_name="+firstname+"&last_name="+lastname+"&email_address="+email);
+
+          window.location = "http://localhost:8000/login/buildprofile"
         }
 
-    function onSuccess(googleUser) {
-      window.location = "http://localhost:8000/login/buildprofile"
-      console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-    }
     function onFailure(error) {
       console.log(error);
     }
