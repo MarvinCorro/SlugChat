@@ -19,6 +19,10 @@
     <dt> <b> Status: </b> </dt>
     <dd> {{status}} </dd>
 
+    <dt> <b> Classes: </b> </dt>
+    {% for class in classes %}
+    <dd> {{class.courseID}} </dd>
+    {% endfor %}
 </dl>
 
 

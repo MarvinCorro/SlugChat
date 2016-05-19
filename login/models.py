@@ -1,5 +1,5 @@
 from django.db import models
-from django.forms import ModelForm
+
 
 class User(models.Model):
         TA = "TA"
@@ -15,37 +15,52 @@ class User(models.Model):
         school = models.CharField(max_length=50)
         studentID = models.CharField(max_length=10)
         email = models.CharField(max_length=50, unique=True)
-        status = models.CharField(max_length=2, choices=statusChoices, default=STUDENT)
+        status = models.CharField(max_length=2,
+                                  choices=statusChoices, default=STUDENT)
         profile_pic = models.CharField(max_length=200, default='N/A')
-        email = models.CharField(max_length=50, unique=True)
         completeProfile = models.BooleanField(default=False)
 
-        # Prevent duplicate entries
-        class Meta:
-            unique_together = ['firstName', 'lastName']
+        def get_status(self):
+            if self.status == "TA":
+
+                return 'Teaching Assistant'
+            elif self.status == "ST":
+                return 'Student'
+            else:
+                return 'Professor'
 
         def __str__(self):
             return self.firstName
 
-#class Course(models.Model):
-#        # these field points to tuple in User DB
-#        professor = models.ForeignKey(
-#                'User',
-#                on_delete=models.CASCADE
-#        )
-#        ta = models.ForeignKey(
-#                'User',
-#                on_delete=models.CASCADE
-#        )
-#        school = models.CharField(max_length=50)
-#        title = models.CharField(max_length=50)
-#
-#class Roster(models.Model):
-#        studentID = models.ForeignKey(
-#                'User',
-#                on_delete=models.CASCADE
-#        )
-#        courseID = models.ForeignKey(
-#                'Course',
-#                on_delete=models.CASCADE
-#        )
+
+class Course(models.Model):
+        # these field points to tuple in User DB
+        professor = models.ForeignKey(
+                'User',
+                on_delete=models.CASCADE,
+                related_name='professor',
+        )
+        ta = models.ForeignKey(
+                'User',
+                on_delete=models.CASCADE,
+                related_name='ta',
+        )
+        school = models.CharField(max_length=50)
+        title = models.CharField(max_length=50)
+
+        def __str__(self):
+            return self.title
+
+
+class Roster(models.Model):
+        studentID = models.ForeignKey(
+                'User',
+                on_delete=models.CASCADE
+        )
+        courseID = models.ForeignKey(
+                'Course',
+                on_delete=models.CASCADE
+        )
+
+        def __str__(self):
+            return self.courseID.title
