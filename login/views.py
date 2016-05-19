@@ -73,7 +73,7 @@ def profile(request):
         status = 'Student'
     elif instance.status == 'TA':
         status = 'Teaching Assistant'
-    else
+    else:
         status = 'Professor'
 
     context = {'full_name'   : instance.firstName + " " + instance.lastName,
