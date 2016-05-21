@@ -24,7 +24,7 @@ def tokensignin(request):
     profile_pic = request.POST['profile_pic']
     request.session['email_address'] = email_address
 
-    # New user who has never signed in before
+    # New user who has never signed in before, save their data to the database.
     if(not User.objects.filter(email=email_address).exists()):
         user_info = User(firstName=first_name, lastName=last_name,
                 email=email_address, profile_pic=profile_pic)
@@ -46,6 +46,11 @@ def profile(request):
 
     email_address = request.session['email_address']
     instance = User.objects.get(email=email_address)
+
+    # Redirect user to build profile page if they haven't completed
+    # their profile
+    if instance.completeProfile is False:
+        return HttpResponseRedirect('/profile/buildprofile/')
     # Here we grab all the courses that the current user has enrolled in
     rosters = instance.roster_set.all()
 
