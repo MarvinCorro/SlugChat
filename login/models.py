@@ -22,11 +22,10 @@ class User(models.Model):
 
         def get_status(self):
             if self.status == "TA":
-
                 return 'Teaching Assistant'
             elif self.status == "ST":
                 return 'Student'
-            else:
+            elif self.status == "PR":
                 return 'Professor'
 
         def __str__(self):
@@ -43,6 +42,9 @@ class Course(models.Model):
         ta = models.ForeignKey(
                 'User',
                 on_delete=models.CASCADE,
+                # Make TA field optional
+                null=True,
+                blank=True,
                 related_name='ta',
         )
         school = models.CharField(max_length=50)
