@@ -1,0 +1,35 @@
+<hl> Profile Page </hl>
+
+<a href="/profile/buildprofile/?update=true">Update Profile</a>
+{% if status == 'Student' %}
+<a href="/profile/enroll">Enroll in Classes</a>
+{% endif %}
+{% if status == 'Professor' %}
+<a href="/profile/addclass">Add a class</a>
+{% endif %}
+<dl>
+    <img src={{profile_pic}} alt="No image to display">
+
+    <dt> <b> Name: </b> </dt>
+    <dd> {{full_name}} </dd>
+
+    <dt> <b> School: </b> </dt>
+    <dd> {{school}} </dd>
+
+    <dt> <b> Student ID: </b> </dt>
+    <dd> {{studentID}} </dd>
+
+    <dt> <b> Email: </b> </dt>
+    <dd> {{email}} </dd>
+
+    <dt> <b> Status: </b> </dt>
+    <dd> {{status}} </dd>
+
+    <dt> <b> Classes: </b> </dt>
+    {% for class in classes %}
+    <dd> {{class.courseID}} </dd>
+    {% endfor %}
+</dl>
+
+
+

@@ -18,6 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^chat/', include('chat.urls')),
-    url(r'^login/', include('login.urls')),
+    url(r'^profile/', include('userpage.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'', include('home.urls')),
 ]
