@@ -17,7 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^chat/', include('chat.urls')),
+    url(r'^class/', include('class.urls')),
     url(r'^profile/', include('userpage.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'', include('home.urls')),
