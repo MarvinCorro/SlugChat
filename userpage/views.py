@@ -141,7 +141,7 @@ def enroll(request):
         roster_form = RosterForm(request.POST, instance=roster)
         if roster_form.is_valid():
             course = roster_form.cleaned_data['courseID']
-            if course not in user.roster_set.all():
+            if not user.roster_set.all().filter(courseID=course).exists():
                 roster_form.save()
             return HttpResponseRedirect('/profile/')
 

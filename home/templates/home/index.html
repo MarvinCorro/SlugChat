@@ -32,7 +32,7 @@
           xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
           xhr.onload = function() {
             console.log('Signed in as: ' + xhr.responseText);
-            window.location = "http://localhost:8000/profile/buildprofile"
+            window.location = "http://localhost:8000/profile/buildprofile/"
           }
           xhr.send("first_name="+firstname+"&last_name="+lastname+"&email_address="+email+"&profile_pic="+profile_pic);
 
