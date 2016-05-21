@@ -27,9 +27,15 @@ def tokensignin(request):
     # New user who has never signed in before
     if(not User.objects.filter(email=email_address).exists()):
         user_info = User(firstName=first_name, lastName=last_name,
-                         email=email_address, profile_pic=profile_pic)
+                email=email_address, profile_pic=profile_pic)
         user_info.save()
     return HttpResponse(status=204)
+
+
+def signout(request):
+    if logged_in(request):
+        del request.session['email_address']
+    return HttpResponseRedirect('/')
 
 
 # Displays the profile information for the user.
@@ -43,15 +49,23 @@ def profile(request):
     # Here we grab all the courses that the current user has enrolled in
     rosters = instance.roster_set.all()
 
+    try:
+        with open('key_file.txt', 'r') as f:
+            GOOGLE_KEY = f.read().rstrip()
+    except IOError:
+        GOOGLE_KEY = None
+        print("key_file not found. \nMessage Ckyle for key_file.txt")
+
     context = {'full_name': instance.firstName + " " + instance.lastName,
                'school': instance.school,
                'studentID': instance.studentID,
                'email': instance.email,
                'status': instance.get_status(),
                'profile_pic': instance.profile_pic,
-               'classes': rosters.all()
-               }
+               'classes': rosters.all(),
+               'GOOGLE_KEY': GOOGLE_KEY    }
 
+    key = {'GOOGLE_KEY': GOOGLE_KEY}
     return render(request, 'userpage/profile.html', context)
 
 

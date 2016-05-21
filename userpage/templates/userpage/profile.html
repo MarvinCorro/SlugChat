@@ -30,6 +30,51 @@
     <dd> {{class.courseID}} </dd>
     {% endfor %}
 </dl>
+<!-- This file reproduces code found at: -->
+<!-- https://developers.google.com/identity/sign-in/web/sign-in -->
+<body>
 
+    <!-- Get the data needed to display google login button -->
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 
+    <!-- Load google platform library -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
+    <!-- Secret Client Key must be in SlugChat/key_file.txt -->
+    <meta name="google-signin-client_id" content="{{ GOOGLE_KEY }}">
+
+    <!-- Make sign in button -->
+    <div id="my-signin2"></div>
+
+    <!-- Make sign out button -->
+    <a href="#" onclick="signOut();">Sign out</a>
+    <script>
+
+    function onSuccess(googleUser) {
+        }
+
+    function onFailure(error) {
+      console.log(error);
+    }
+    function renderButton() {
+      gapi.signin2.render('my-signin2', {
+        'scope': 'profile email',
+        'width': 0,
+        'height': 0,
+        'longtitle': false,
+        'theme': 'dark',
+        'onsuccess': onSuccess,
+        'onfailure': onFailure
+      });
+    }
+
+        function signOut() {
+          var auth2 = gapi.auth2.getAuthInstance();
+          auth2.signOut().then(function () {
+            window.location = "http://localhost:8000/profile/signout/"
+            console.log('User signed out.');
+          });
+        }
+    </script>
+
+</body>
