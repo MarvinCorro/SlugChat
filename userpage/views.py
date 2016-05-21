@@ -2,31 +2,14 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
-from login.models import User
-from login.models import Roster
-from login.models import Course
-from login.forms import UserForm
-from login.forms import RosterForm
-from login.forms import CourseForm
+from home.models import User
+from home.models import Roster
+from home.models import Course
+from userpage.forms import UserForm
+from userpage.forms import RosterForm
+from userpage.forms import CourseForm
 
-from login.functions import logged_in
-
-
-# Serves the index page for login, which is where the login takes place
-# Note that you have to have the key_file.txt in your slugchat directory
-# for google login to work.
-#
-# You must go to localhost:8000/login/ for login to work, 127.0.0.1:8000/login
-# will not work.
-def index(request):
-    try:
-        with open('key_file.txt', 'r') as f:
-            GOOGLE_KEY = f.read().rstrip()
-    except IOError:
-        GOOGLE_KEY = None
-        print("key_file not found. \nMessage Ckyle for key_file.txt")
-    context = {'GOOGLE_KEY': GOOGLE_KEY}
-    return render(request, 'login/index.html', context)
+from slugchat.functions import logged_in
 
 
 # This is the function that takes the info from google sign in, then adds the
@@ -53,7 +36,7 @@ def tokensignin(request):
 def profile(request):
 
     if not logged_in(request):
-        return HttpResponseRedirect('/login/')
+        return HttpResponseRedirect('/')
 
     email_address = request.session['email_address']
     instance = User.objects.get(email=email_address)
@@ -69,7 +52,7 @@ def profile(request):
                'classes': rosters.all()
                }
 
-    return render(request, 'login/profile.html', context)
+    return render(request, 'userpage/profile.html', context)
 
 
 # This page allows a user to update fields in their user profile.
@@ -86,7 +69,7 @@ def profile(request):
 def buildprofile(request):
 
     if not logged_in(request):
-        return HttpResponseRedirect('/login/')
+        return HttpResponseRedirect('/')
 
     email_address = request.session['email_address']
 
@@ -95,7 +78,7 @@ def buildprofile(request):
     if (not request.GET.get('update', '') == 'true' and
             User.objects.filter(
             email=email_address, completeProfile=True).exists()):
-        return HttpResponseRedirect('/login/profile/')
+        return HttpResponseRedirect('/profile/')
 
     # We get the current user and assign it to the user variable, then
     # tell the model form that we want to update the information for
@@ -106,10 +89,10 @@ def buildprofile(request):
         if user_form.is_valid():
             user.completeProfile = True
             user_form.save()
-            return HttpResponseRedirect('/login/profile/')
+            return HttpResponseRedirect('/profile/')
     else:
         user_form = UserForm(instance=user)
-    return render(request, 'login/buildprofile.html',
+    return render(request, 'userpage/buildprofile.html',
                   {'user_form': user_form})
 
 
@@ -117,7 +100,7 @@ def buildprofile(request):
 def addclass(request):
 
     if not logged_in(request):
-        return HttpResponseRedirect('/login/')
+        return HttpResponseRedirect('/')
 
     email_address = request.session['email_address']
 
@@ -131,12 +114,12 @@ def addclass(request):
         course_form = CourseForm(request.POST, instance=course)
         if course_form.is_valid():
             course_form.save()
-            return HttpResponseRedirect('/login/profile/')
+            return HttpResponseRedirect('/profile/')
 
     else:
         course_form = CourseForm()
 
-    return render(request, 'login/addclass.html',
+    return render(request, 'userpage/addclass.html',
                   {'course_form': course_form})
 
 
@@ -144,7 +127,7 @@ def addclass(request):
 def enroll(request):
 
     if not logged_in(request):
-        return HttpResponseRedirect('/login/')
+        return HttpResponseRedirect('/')
 
     email_address = request.session['email_address']
 
@@ -157,11 +140,13 @@ def enroll(request):
     if request.method == 'POST':
         roster_form = RosterForm(request.POST, instance=roster)
         if roster_form.is_valid():
-            roster_form.save()
-            return HttpResponseRedirect('/login/profile/')
+            course = roster_form.cleaned_data['courseID']
+            if course not in user.roster_set.all():
+                roster_form.save()
+            return HttpResponseRedirect('/profile/')
 
     else:
         roster_form = RosterForm()
 
-    return render(request, 'login/enroll.html',
+    return render(request, 'userpage/enroll.html',
                   {'roster_form': roster_form})

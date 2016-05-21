@@ -1,9 +1,9 @@
 # See https://docs.djangoproject.com/en/1.9/topics/forms/modelforms/
 from django.forms import ModelForm
 
-from .models import User
-from .models import Roster
-from .models import Course
+from home.models import User
+from home.models import Roster
+from home.models import Course
 
 
 class UserForm(ModelForm):
