@@ -2,6 +2,7 @@
 key_file.txt
 *.swp
 *.swo
+db.sqlite
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
