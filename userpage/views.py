@@ -2,12 +2,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
-from home.models import User
-from home.models import Roster
-from home.models import Course
-from userpage.forms import UserForm
-from userpage.forms import RosterForm
-from userpage.forms import CourseForm
+from home.models import User, Roster, Course
+from userpage.forms import UserForm, RosterForm, CourseForm
 
 from slugchat.functions import logged_in
 
@@ -131,15 +127,17 @@ def addclass(request):
     email_address = request.session['email_address']
 
     user = User.objects.get(email=email_address)
-    if not (User.objects.filter(
-            email=email_address, status="PR").exists()):
-        return HttpResponse('Sorry, only professors can add classes.')
+    if user.get_status() is not 'Professor':
+        return HttpResponse(
+                'Sorry, only professors can add classes.', status=401)
 
+    # Create a new course with the current user as the professor
     course = Course(professor=user)
     if request.method == 'POST':
         course_form = CourseForm(request.POST, instance=course)
         if course_form.is_valid():
             course_form.save()
+            Roster(studentID=user, courseID=course).save()
             return HttpResponseRedirect('/profile/')
 
     else:
@@ -149,8 +147,8 @@ def addclass(request):
                   {'course_form': course_form})
 
 
-# Only students can enroll in a course.
-def enroll(request):
+# Only professors can delete a class.
+def deleteclass(request):
 
     if not logged_in(request):
         return HttpResponseRedirect('/')
@@ -158,19 +156,52 @@ def enroll(request):
     email_address = request.session['email_address']
 
     user = User.objects.get(email=email_address)
-    if not (User.objects.filter(
-            email=email_address, status="ST").exists()):
-        return HttpResponse('Sorry, only students may sign up for classes.')
+    if user.get_status() is not 'Professor':
+        return HttpResponse(
+                'Sorry, only professors can add classes.', status=401)
 
     roster = Roster(studentID=user)
     if request.method == 'POST':
         roster_form = RosterForm(request.POST, instance=roster)
         if roster_form.is_valid():
             course = roster_form.cleaned_data['courseID']
-            if not user.roster_set.all().filter(courseID=course).exists():
+            # If user hit Delete button, delete from db if the user is actually
+            # enrolled in this class.
+            Course.objects.get(title=course).delete()
+            return HttpResponseRedirect('/profile/')
+    else:
+        roster_form = RosterForm()
+
+    return render(request, 'userpage/deleteclass.html',
+                  {'roster_form': roster_form})
+
+
+# Only students can enroll in a course.
+def manage_classes(request):
+
+    if not logged_in(request):
+        return HttpResponseRedirect('/')
+
+    email_address = request.session['email_address']
+
+    user = User.objects.get(email=email_address)
+
+    roster = Roster(studentID=user)
+    if request.method == 'POST':
+        roster_form = RosterForm(request.POST, instance=roster)
+        if roster_form.is_valid():
+            course = roster_form.cleaned_data['courseID']
+            # If user hit Delete button, delete from db if the user is actually
+            # enrolled in this class.
+            if request.POST.get('delete') and user.roster_set.all().filter(
+                    courseID=course).exists():
+                print('TEST')
+                user.roster_set.get(courseID=course).delete()
+            # Else if the user isn't already enrolled in this course
+            # enroll them.
+            elif not user.roster_set.all().filter(courseID=course).exists():
                 roster_form.save()
             return HttpResponseRedirect('/profile/')
-
     else:
         roster_form = RosterForm()
 

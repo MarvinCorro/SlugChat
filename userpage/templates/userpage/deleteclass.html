@@ -1,0 +1,9 @@
+<form method="post">
+    {% csrf_token %}
+    <br>
+    <b> Delete a class</b>
+    <br>
+    {{ roster_form }}
+    <br>
+    <input type="submit" value="Delete" name="delete" />
+</form>
