@@ -9,5 +9,6 @@ def class_chat(request):
             return HttpResonseRedirect('/')
 
         user = User.objects.get(email=request.session['email_address'])
-        firstname = {'firstname': user.firstName}
-        return render(request, 'class/class_chat.html', firstname)
+        context = {'firstname': user.firstName,
+                   'currentclass': request.GET.get('class', '')}
+        return render(request, 'class/class_chat.html', context)

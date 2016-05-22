@@ -22,14 +22,22 @@ def tokensignin(request):
     last_name = request.POST['last_name']
     email_address = request.POST['email_address']
     profile_pic = request.POST['profile_pic']
+
+    # Set the request.ssession variable. This keeps track of the user's
+    # logged in state.
     request.session['email_address'] = email_address
 
     # New user who has never signed in before, save their data to the database.
     if(not User.objects.filter(email=email_address).exists()):
         user_info = User(firstName=first_name, lastName=last_name,
-                email=email_address, profile_pic=profile_pic)
+                         email=email_address, profile_pic=profile_pic)
         user_info.save()
-    return HttpResponse(status=204)
+    else:
+        user_info = User.objects.get(email=email_address)
+
+    classes = user_info.roster_set.all().all()
+    return render(request, 'home/ajax_class_request.html',
+                  {'classes': classes})
 
 
 def signout(request):
@@ -68,9 +76,8 @@ def profile(request):
                'status': instance.get_status(),
                'profile_pic': instance.profile_pic,
                'classes': rosters.all(),
-               'GOOGLE_KEY': GOOGLE_KEY    }
+               'GOOGLE_KEY': GOOGLE_KEY}
 
-    key = {'GOOGLE_KEY': GOOGLE_KEY}
     return render(request, 'userpage/profile.html', context)
 
 
