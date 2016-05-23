@@ -1,0 +1,26 @@
+var currentPage = 0; 
+
+function start(){
+if(PDFObject.supportsPDFs){
+   console.log("Yay, this browser supports inline PDFs.");
+} else {
+   console.log("Boo, inline PDFs are not supported by this browser");
+}
+changePage(0);
+}
+
+function changePage(number){
+var numval = String(number);
+PDFObject.embed("../static/Planning.pdf", "#pdf2",{page: numval, height:"450px",width:"100%" });
+}
+
+function prevSlide(){
+currentPage = currentPage - 1; 
+changePage(currentPage);
+}
+
+function prevSlide(){
+currentPage = currentPage + 1; 
+changePage(currentPage);
+}
+
