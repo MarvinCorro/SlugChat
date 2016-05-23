@@ -17,5 +17,4 @@ def index(request):
         print("key_file not found. \nMessage Ckyle for key_file.txt")
     context = {'GOOGLE_KEY': GOOGLE_KEY}
     #return render(request, 'home/index.html', context)
-    #return render(request, 'home/landingpage.html', context)
     return render(request, 'home/homepage.html', context)
