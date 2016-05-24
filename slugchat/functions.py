@@ -1,6 +1,7 @@
 # Helper functions for interacting with login
 
-
+# Get the user model so we can return it in logged_in
+from home.models import User
 # Run pip install --upgrade google-api-python-client
 # to get the oath2client
 from oauth2client import client, crypt
@@ -26,13 +27,15 @@ def verify_user(token):
                                  'https://accounts.google.com']:
             raise crypt.AppIdentityError("Wrong issuer.")
     except crypt.AppIdentityError as error:
-        return error
         # Invalid token
+        return {'error': error}
+
     return idinfo
 
 
+# If the user is logged in, return the corresponsing User model
 def logged_in(request):
-    if 'email_address' in request.session:
-        return True
+    if 'user' in request.session:
+        return User.objects.get(userID=request.session['user'])
     else:
-        return False
+        return None
