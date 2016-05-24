@@ -5,40 +5,48 @@ from django.http import HttpResponse
 from home.models import User, Roster, Course
 from userpage.forms import UserForm, RosterForm, CourseForm
 
-from slugchat.functions import logged_in
+from slugchat.functions import logged_in, verify_user
 
 
 # This is the function that takes the info from google sign in, then adds the
 # user to the database if they are not already in the database. The
-# request.session key 'email_address' is also set in this function, which is
+# request.session key 'id_token' is also set in this function, which is
 # the backbone of the login system.
 @csrf_exempt
 def tokensignin(request):
-    first_name = request.POST['first_name']
-    last_name = request.POST['last_name']
-    email_address = request.POST['email_address']
-    profile_pic = request.POST['profile_pic']
+    id_token = request.POST['id_token']
+
+    user_info = verify_user(id_token)
+    if user_info is '':
+        print(user_info)
+        return HttpResponse(status=403)
+    print(user_info)
+   # first_name = request.POST['first_name']
+   # last_name = request.POST['last_name']
+   # email_address = request.POST['email_address']
+   # profile_pic = request.POST['profile_pic']
 
     # Set the request.ssession variable. This keeps track of the user's
     # logged in state.
-    request.session['email_address'] = email_address
+    #request.session['user'] = id_token
 
     # New user who has never signed in before, save their data to the database.
-    if(not User.objects.filter(email=email_address).exists()):
-        user_info = User(firstName=first_name, lastName=last_name,
-                         email=email_address, profile_pic=profile_pic)
-        user_info.save()
-    else:
-        user_info = User.objects.get(email=email_address)
+    # TODO add id_token
+   # if(not User.objects.filter(id_token=id_token).exists()):
+   #     user_info = User(firstName=first_name, lastName=last_name,
+   #                      email=email_address, profile_pic=profile_pic)
+   #     user_info.save()
+   # else:
+   #     user_info = User.objects.get(email=email_address)
 
-    classes = user_info.roster_set.all().all()
+   # classes = user_info.roster_set.all().all()
     return render(request, 'home/ajax_class_request.html',
                   {'classes': classes})
 
 
 def signout(request):
     if logged_in(request):
-        del request.session['email_address']
+        del request.session['id_token']
     return HttpResponseRedirect('/')
 
 
@@ -48,8 +56,8 @@ def profile(request):
     if not logged_in(request):
         return HttpResponseRedirect('/')
 
-    email_address = request.session['email_address']
-    instance = User.objects.get(email=email_address)
+    id_token = request.session['id_token']
+    instance = User.objects.get(email=id_token)
 
     # Redirect user to build profile page if they haven't completed
     # their profile
@@ -93,19 +101,19 @@ def buildprofile(request):
     if not logged_in(request):
         return HttpResponseRedirect('/')
 
-    email_address = request.session['email_address']
+    id_token = request.session['id_token']
 
     # If this user's profile is complete, and they aren't coming here to
     # update their profile, redirect to profile page
     if (not request.GET.get('update', '') == 'true' and
             User.objects.filter(
-            email=email_address, completeProfile=True).exists()):
+            email=id_token, completeProfile=True).exists()):
         return HttpResponseRedirect('/profile/')
 
     # We get the current user and assign it to the user variable, then
     # tell the model form that we want to update the information for
     # this user.
-    user = User.objects.get(email=email_address)
+    user = User.objects.get(email=id_token)
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=user)
         if user_form.is_valid():
@@ -124,9 +132,9 @@ def addclass(request):
     if not logged_in(request):
         return HttpResponseRedirect('/')
 
-    email_address = request.session['email_address']
+    id_token = request.session['id_token']
 
-    user = User.objects.get(email=email_address)
+    user = User.objects.get(email=id_token)
     if user.get_status() is not 'Professor':
         return HttpResponse(
                 'Sorry, only professors can add classes.', status=401)
@@ -153,9 +161,9 @@ def deleteclass(request):
     if not logged_in(request):
         return HttpResponseRedirect('/')
 
-    email_address = request.session['email_address']
+    id_token = request.session['id_token']
 
-    user = User.objects.get(email=email_address)
+    user = User.objects.get(email=id_token)
     if user.get_status() is not 'Professor':
         return HttpResponse(
                 'Sorry, only professors can add classes.', status=401)
@@ -182,9 +190,9 @@ def manage_classes(request):
     if not logged_in(request):
         return HttpResponseRedirect('/')
 
-    email_address = request.session['email_address']
+    id_token = request.session['id_token']
 
-    user = User.objects.get(email=email_address)
+    user = User.objects.get(email=id_token)
 
     roster = Roster(studentID=user)
     if request.method == 'POST':
