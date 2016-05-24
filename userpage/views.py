@@ -213,12 +213,13 @@ def manage_classes(request):
             course = roster_form.cleaned_data['courseID']
             # If user hit Delete button, delete from db only if the user is
             # enrolled in this class.
-            if request.POST.get('delete') and user.roster_set.all().filter(
+            if request.POST.get('delete', '') and user.roster_set.all().filter(
                     courseID=course).exists():
                 user.roster_set.get(courseID=course).delete()
             # Else if the user isn't already enrolled in this course
             # enroll them.
-            elif not user.roster_set.all().filter(courseID=course).exists():
+            elif (request.POST.get('delete', '') is '' and
+                  not user.roster_set.all().filter(courseID=course).exists()):
                 roster_form.save()
             return HttpResponseRedirect('/profile/')
     else:
