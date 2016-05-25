@@ -7,7 +7,7 @@
       <title>Slug Chat ~ A Social Thing!</title>
 
       <!-- Get the data needed to display google login button -->
-      <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+      <script src="https://apis.google.com/js/platform.js?onload=renderButton" defer></script>
 
       <!-- Load google platform library -->
       <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -229,7 +229,6 @@
                             -->
                            <!-- Make sign in button -->
                            <div id="my-signin2"></div>
-
                            <div id="signout">
                            <!-- Make sign out button -->
                            <a href="#" onclick="signOut();">Sign out</a>
@@ -375,6 +374,8 @@
           gapi.signin2.render('my-signin2', {
                               'scope': 'profile email',
                               'longtitle': false,
+                              'height': 40,
+                              'width': 120,
                               'theme': 'dark',
                               'onsuccess': onSuccess,
                               'onfailure': onFailure
