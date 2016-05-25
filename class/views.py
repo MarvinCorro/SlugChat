@@ -11,4 +11,5 @@ def class_chat(request):
         user = User.objects.get(email=request.session['email_address'])
         context = {'firstname': user.firstName,
                    'currentclass': request.GET.get('class', '')}
-        return render(request, 'class/class_chat.html', context)
+        #return render(request, 'class/class_chat.html', context)
+        return render(request, 'class/mainAppPage.html', context)
