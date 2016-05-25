@@ -4,7 +4,7 @@
    This is a starter template page. Use this page to start your new project from
    scratch. This page gets rid of all links and provides the needed markup only.
    -->
-<html ng-app="slugChatApp"  ng-controller="testDataCtrl">
+<html>
    <head>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -85,9 +85,9 @@
                            <li>
                               <!-- Inner Menu: contains the notifications -->
                               <ul class="menu">
-                                 <li ng-repeat="classroom in classrooms">
+                                 <li >
                                    <a href="#">
-                                   <i class="fa fa-circle text-aqua"></i> {{classroom.name}}
+                                   <i class="fa fa-circle text-aqua"></i>
                                    </a>
                                  </li>
                                  <!-- end notification -->
@@ -102,7 +102,7 @@
                         <!-- Menu toggle button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa fa-comments-o "></i>
-                        <span class="label label-success">{{messages.length}}</span>
+                        <span class="label label-success"></span>
                         </a>
                         <ul class="dropdown-menu">
                            <li class="header">Recent Messages</li>
@@ -125,19 +125,19 @@
                                        <p>Why not buy a new awesome theme?</p>
                                     </a>
                                  </li>
-                                 <li ng-repeat="message in messages">
+                                 <li>
                                    <a href ="#">
                                      <div class="pull-left">
                                         <!-- User Image -->
-                                        <img ng-src="{{message.profile}}" alt="{{message.name}}" class="img-circle img-responsive" >
+                                        <img src="" alt="" class="img-circle img-responsive" >
                                      </div>
                                      <!-- Message title and timestamp -->
                                      <h4>
-                                        {{message.name}}
-                                        <small><i class="fa fa-clock-o"></i>{{message.time}}</small>
+
+                                        <small><i class="fa fa-clock-o"></i></small>
                                      </h4>
                                      <!-- The subject -->
-                                     <p>{{message.subject}}</p>
+                                     <p></p>
                                    </a>
                                  </li>
                                  <!-- end message -->
@@ -153,16 +153,16 @@
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                            <!-- The user image in the navbar-->
-                           <img ng-src="{{userinfo.profile}}" class="user-image img-responsive" alt="{{userinfo.username}}">
+                           <img src="" class="user-image img-responsive" alt="">
                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                           <span class="hidden-xs">{{userinfo.name}}</span>
+                           <span class="hidden-xs"></span>
                         </a>
                         <ul class="dropdown-menu">
                            <!-- The user image in the menu -->
                            <li class="user-header">
-                              <img ng-src="{{userinfo.profile}}" class="img-circle img-responsive" alt="User Image">
+                              <img src="" class="img-circle img-responsive" alt="User Image">
                               <p>
-                                 {{userinfo.username}} - {{userinfo.title}}
+
                               </p>
                            </li>
                            <!-- Menu Body -->
@@ -244,26 +244,35 @@
                     <div class="col-sm-12">
                               <div class="box box-solid">
                                 <div class="box-header with-border">
-                                  <h3 class="box-title">{{userinfo.username}}</h3>
-                                  <a href="#" class="btn btn-sm btn-default btn-flat pull-right">Edit</a>
+                                  <h3 class="box-title">{{full_name}}</h3>
+                                  <a href="/profile/buildprofile/?update=true" class="btn btn-sm btn-default btn-flat pull-right">Update Profile</a>
                                 </div>
                                 <!-- /.box-header -->
                                 <div class="box-body">
                                   <div class="col-sm-6">
-                                   <img ng-src="{{userinfo.profile}}" class=" profile-user-img img-responsive img-circle" id = "profilePicture">
+                                   <img src="{{profile_pic}}" class=" profile-user-img img-responsive img-circle" id = "profilePicture">
                                 </div>
                               <div class="col-sm-6">
 
                                     <strong><i class="fa fa-book margin-r-5"></i>Occupation:</strong>
                                     <p class="text-muted">
-                                      {{userinfo.title}}
+
                                     </p>
                                     <hr>
                                     <strong><i class="fa fa-file-text-o margin-r-5"></i>About:</strong>
-                                    <p>{{userinfo.bio}}</p>
+                                    <p></p>
                                     <hr>
                                     <strong><i class="fa  fa-envelope-o margin-r-5"></i>Contact:</strong>
-                                    <p>{{userinfo.contactinfo}}</p>
+                                    <p>Email: {{email}}</p>
+                                    <hr>
+                                    <strong><i class="fa  fa-envelope-o margin-r-5"></i>School:</strong>
+                                    <p>{{school}}</p>
+                                    <hr>
+                                    <strong><i class="fa  fa-envelope-o margin-r-5"></i>StudentID:</strong>
+                                    <p>{{studentID}}</p>
+                                    <hr>
+                                    <strong><i class="fa  fa-envelope-o margin-r-5"></i>Status:</strong>
+                                    <p>Email:{{status}}</p>
 
 
 
@@ -286,21 +295,20 @@
                                 </div>
                                 <!-- /.box-header -->
                                 <div class="box-body">
+                                  {% for class in classes %}
                                   <div class="col-sm-12">
-                                  <div ng-repeat="classroom in classrooms" class="small-box bg-green">
+                                  <div class="small-box bg-green">
                                   <div class="inner">
-                                    <h3>{{classroom.name}}</h3>
-                                    <p>{{classroom.description}}</p>
+                                    <h3>{{class.courseID}}</h3>
+                                    <p></p>
                                   </div>
 
-                                  <a href="#" class="small-box-footer">
+                                  <a href="/class/?class={{class.courseID}}" class="small-box-footer">
                                     Go to Class <i class="fa fa-arrow-circle-right"></i>
                                   </a>
                                 </div>
-
-
-
                                 </div>
+                                {% endfor %}
                               </div>
                                 <!-- /.box-body -->
                               </div>
@@ -316,8 +324,8 @@
                   <div class="box-body no-padding">
                     <ul class="users-list clearfix">
                       <li ng-repeat="classmate in classmates">
-                        <img class="profile-user-img img-responsive img-circle" ng-src="{{classmate.profile}}" alt="User Image">
-                        <a class="users-list-name" href="#">{{classmate.name}}</a>
+                        <img class="profile-user-img img-responsive img-circle" ng-src="" alt="User Image">
+                        <a class="users-list-name" href="#"></a>
                       </li>
                     </ul>
                     <!-- /.users-list -->
@@ -331,6 +339,60 @@
                     </div>
                               <!-- /.box -->
                     </div>
+                    <div class="row"  >
+                      <!-- DISPLAY CLASSES -->
+                      <div class="col-sm-12 ">
+                                <div class="box ">
+                                  <div class="box-header with-border">
+                                    <h3 class="box-title">Original</h3>
+                                  </div>
+                                  <!-- /.box-header -->
+                                  <div class="box-body">
+                                    <div class="col-sm-12">
+
+                                      <hl> Profile Page </hl>
+
+                                      <a href="/profile/buildprofile/?update=true">Update Profile</a>
+                                      {% if status == 'Student' %}
+                                      <a href="/profile/enroll">Enroll in Classes</a>
+                                      {% endif %}
+                                      {% if status == 'Professor' %}
+                                      <a href="/profile/addclass">Add a class</a>
+                                      {% endif %}
+                                      <dl>
+                                          <img src={{profile_pic}} alt="No image to display">
+
+                                          <dt> <b> Name: </b> </dt>
+                                          <dd> {{full_name}} </dd>
+
+                                          <dt> <b> School: </b> </dt>
+                                          <dd> {{school}} </dd>
+
+                                          <dt> <b> Student ID: </b> </dt>
+                                          <dd> {{studentID}} </dd>
+
+                                          <dt> <b> Email: </b> </dt>
+                                          <dd> {{email}} </dd>
+
+                                          <dt> <b> Status: </b> </dt>
+                                          <dd> {{status}} </dd>
+
+                                          <dt> <b> Classes: </b> </dt>
+                                          {% for class in classes %}
+                                          <a href="/class/?class={{class.courseID}}"> {{class.courseID}}</a>
+                                          {% endfor %}
+                                      </dl>
+
+                                  </div>
+                                </div>
+                                  <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                      </div>
+                      <!--CLASSMATES-->
+
+                                <!-- /.box -->
+                      </div>
                   </div>
 
                </div>
@@ -367,57 +429,6 @@
       <script src="{%static 'js/angular.min.js'%}"></script>
       <!--<script src="{%static 'js/controllers.js'%}"></script> -->
 
-      <script>
-      var slugChatApp = angular.module('slugChatApp', []);
-
-      slugChatApp.controller('testDataCtrl', function ($scope) {
-        $scope.messages = [
-          {'name': 'Your Boss',
-           'subject': "You're fired",
-          'time': "2 mins",
-           'profile': "http://i.forbesimg.com/media/lists/people/anna-wintour_416x416.jpg",},
-           {'name': 'Your Mom',
-            'subject': "Call me sweetie",
-           'time': "500 years",
-            'profile': "http://img.thesun.co.uk/aidemitlum/archive/00787/Susan-Boyle280_787960a-144x217.jpg",},
-            {'name': "Marvin's Twin",
-             'subject': "Tickets to concert!",
-            'time': "3 hours",
-             'profile': "{%static 'images/MarvinCorroProfileIm.jpg'%}",},
-             {'name': 'Your Husband',
-              'subject': "I'm gonna be late.",
-             'time': "1 min",
-              'profile': "http://i2.wp.com/www.powerlineblog.com/ed-assets/2016/01/donald-trump.jpg?fit=1200%2C1200",},
-              {'name': 'James Jiggles',
-               'subject': "Once I was...",
-              'time': "7 years old",
-               'profile': "{%static 'AdminLTE/dist/img/user2-160x160.jpg'%}",},
-        ];
-
-        $scope.classrooms = [
-          {'name': "CMPS 115", 'description':"Software Engineering"},
-          {'name': "CMPE 110", 'description':"Computer Architecture"},
-          {'name': "CMPS 109", 'description':"Advanced Programming"}
-        ];
-
-        $scope.classmates = [
-          {'name': "Chris Kyle", 'profile':"{% static 'img/profile-pic.png'%}"},
-          {'name': "Aramis Marden", 'profile':"{%static 'img/profile-pic.png'%}"},
-          {'name': "Joseph Faulkner", 'profile':"{% static 'img/profile-pic.png'%}"},
-          {'name': "Christopher Ketchum", 'profile':"{% static 'img/profile-pic.png'%}"},
-          {'name': 'Snow White', 'profile':"{% static 'img/profile-pic.png'%}"},
-          {'name': "Alex Pang", 'profile':"{% static 'img/profile-pic.png'%}"}
-        ];
-
-        $scope.userinfo =
-          {'username': "Martin Corro",
-          'profile': "{%static 'images/MarvinCorroProfileIm.jpg'%}",
-          'bio': "I like looting, shooting, bootin and computing.",
-          'title': "Student",
-          'contactinfo' : "C:(555)-555-5555",
-        };
-      });
-      </script>
       <!-- Optionally, you can add Slimscroll and FastClick plugins.
          Both of these plugins are recommended to enhance the
          user experience. Slimscroll is required when using the
