@@ -1,5 +1,8 @@
 # key_map contains the google public key
 key_file.txt
+*.swp
+*.swo
+db.sqlite3
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

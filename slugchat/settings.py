@@ -31,8 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'login.apps.LoginConfig',
-    'chat.apps.ChatConfig',
+    'class.apps.ClassConfig',
+    'userpage.apps.UserpageConfig',
+    'home.apps.HomeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -121,3 +122,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(BASE_DIR,"static_cdn")
+MEDIA_ROOT = os.path.join(BASE_DIR,"media_cdn")
+
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,"static"),
+]

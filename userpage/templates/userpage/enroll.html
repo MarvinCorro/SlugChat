@@ -1,0 +1,9 @@
+<form method="post">
+    {% csrf_token %}
+    <b> Add or Drop a class </b>
+    <br>
+    {{ roster_form }}
+    <br>
+    <input type="submit" value="Drop" name="delete" />
+    <input type="submit" value="Add" />
+</form>
