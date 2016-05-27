@@ -141,7 +141,7 @@ def buildprofile(request):
     else:
         user_form = UserForm(instance=user)
     #return render(request, 'userpage/buildprofile.html', {'user_form': user_form})
-    return render(request, 'userpage/editProfile.html', {'user_form': user_form})
+    return render(request, 'userpage/editprofile.html', {'user_form': user_form})
 
 
 
