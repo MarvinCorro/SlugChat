@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .forms import FileForm
 from .models import file_dir, FileDB
+from slugchat.settings import MEDIA_ROOT
 
 @csrf_protect
 def upload_file(request):
@@ -24,5 +25,6 @@ def upload_file(request):
 	return render(request, 'upload.html', {'form': form})
 
 def download_file(request):
-	files = [file_dir+x for x in os.listdir(file_dir)]
+	new_dir = MEDIA_ROOT + file_dir
+	files = ['media_cdn/static/uploads/'+x for x in os.listdir(new_dir)]
 	return render(request, 'download.html', {'filelist': files})

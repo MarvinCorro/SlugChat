@@ -1,0 +1,34 @@
+<hl> Profile Page </hl>
+
+<!-- This part of the page changes depedning on the user's status.
+    A professor is allowed to create a new class.
+    //-->
+<a href="/profile/buildprofile/?update=true">Update Profile</a>
+<a href="/profile/enroll">Enroll/Drop Classes</a>
+{% if status == 'Professor' %}
+<a href="/profile/addclass">Create a class</a>
+<a href="/profile/deleteclass">Delete a class</a>
+{% endif %}
+<dl>
+    <img src={{profile_pic}} alt="No image to display">
+
+    <dt> <b> Name: </b> </dt>
+    <dd> {{full_name}} </dd>
+
+    <dt> <b> School: </b> </dt>
+    <dd> {{school}} </dd>
+
+    <dt> <b> Student ID: </b> </dt>
+    <dd> {{studentID}} </dd>
+
+    <dt> <b> Email: </b> </dt>
+    <dd> {{email}} </dd>
+
+    <dt> <b> Status: </b> </dt>
+    <dd> {{status}} </dd>
+
+    <dt> <b> Classes: </b> </dt>
+    {% for class in classes %}
+    <a href="/class/?class={{class.courseID}}"> {{class.courseID}}</a> 
+    {% endfor %}
+</dl>
