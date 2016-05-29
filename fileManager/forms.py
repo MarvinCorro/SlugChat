@@ -5,4 +5,4 @@ from fileManager.models import FileDB
 class FileForm(ModelForm):
 	class Meta:
 		model = FileDB
-		fields = ['fileObj']
+		fields = ['fileObj', 'fileName']
