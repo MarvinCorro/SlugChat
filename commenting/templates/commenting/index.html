@@ -4,7 +4,7 @@
 	<!--iterate through each file in the file list-->
 	{% for file in file_list %}
 		<!--list each file-->
-		<li><a href="{% url 'commenting:detail' file.id%}">{{file.file }}</a></li>
+		<li><a href="{% url 'commenting:detail' file.id%}">{{file.file}}</a></li>
 	{% endfor %}
 	</ul>
 <!--otherwise, no files to show-->

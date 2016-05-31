@@ -15,7 +15,7 @@ class Comment(models.Model):
     #the comment itself, simple text field
     comment = models.CharField(max_length=200)
     #creates a reference to the user who made the comment
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    #user = models.ForeignKey(User, on_delete=models.CASCADE)
     #pub_date is auto pulled. make sure datetime import is present
     pub_date = models.DateTimeField(default=datetime.now, blank=True)
     def __str__(self):

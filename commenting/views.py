@@ -16,6 +16,6 @@ def detail(request, file_id):
 	file = get_object_or_404(File, pk=file_id)
 	return render(request, 'commenting/detail.html', {'file': file})
 	
-def post_new(request, file_id):
+def post_new(request):
         form = CommentForm()
         return render(request, 'commenting/post_new.html', {'form': form})
