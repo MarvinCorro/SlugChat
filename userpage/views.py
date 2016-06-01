@@ -101,7 +101,8 @@ def profile(request):
                'classes': rosters.all(),
                'GOOGLE_KEY': GOOGLE_KEY}
 
-    return render(request, 'userpage/profile.html', context)
+    #return render(request, 'userpage/profile.html', context)
+    return render(request, 'userpage/viewMyProfile.html', context)
 
 
 # This page allows a user to update fields in their user profile.
@@ -139,8 +140,9 @@ def buildprofile(request):
             return HttpResponseRedirect('/profile/')
     else:
         user_form = UserForm(instance=user)
-    return render(request, 'userpage/buildprofile.html',
-                  {'user_form': user_form})
+    #return render(request, 'userpage/buildprofile.html', {'user_form': user_form})
+    return render(request, 'userpage/editprofile.html', {'user_form': user_form})
+
 
 
 # Only professors can add a class.
