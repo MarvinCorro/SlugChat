@@ -153,7 +153,7 @@ def addclass(request):
     if user is None:
         return HttpResponseRedirect('/')
 
-    if user.get_status() is not 'Professor':
+    if user.get_status() != 'Professor':
         return HttpResponse(
                 'Sorry, only professors can add classes.', status=401)
 
@@ -181,7 +181,7 @@ def deleteclass(request):
     if user is None:
         return HttpResponseRedirect('/')
 
-    if user.get_status() is not 'Professor':
+    if user.get_status() != 'Professor':
         return HttpResponse(
                 'Sorry, only professors can add classes.', status=401)
 
