@@ -1,11 +1,13 @@
 <hl> Profile Page </hl>
 
+<!-- This part of the page changes depedning on the user's status.
+    A professor is allowed to create a new class.
+    //-->
 <a href="/profile/buildprofile/?update=true">Update Profile</a>
-{% if status == 'Student' %}
-<a href="/profile/enroll">Enroll in Classes</a>
-{% endif %}
+<a href="/profile/enroll">Enroll/Drop Classes</a>
 {% if status == 'Professor' %}
-<a href="/profile/addclass">Add a class</a>
+<a href="/profile/addclass">Create a class</a>
+<a href="/profile/deleteclass">Delete a class</a>
 {% endif %}
 <dl>
     <img src={{profile_pic}} alt="No image to display">

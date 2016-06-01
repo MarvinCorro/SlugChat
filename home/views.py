@@ -15,5 +15,6 @@ def index(request):
     except IOError:
         GOOGLE_KEY = None
         print("key_file not found. \nMessage Ckyle for key_file.txt")
+
     context = {'GOOGLE_KEY': GOOGLE_KEY}
     return render(request, 'home/index.html', context)

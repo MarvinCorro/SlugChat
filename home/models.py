@@ -10,6 +10,7 @@ class User(models.Model):
                 (PROFESSOR, 'Professor'),
                 (STUDENT, 'Student'),
         )
+        userID = models.CharField(max_length=100)
         firstName = models.CharField(max_length=50)
         lastName = models.CharField(max_length=50)
         school = models.CharField(max_length=50)
@@ -17,7 +18,10 @@ class User(models.Model):
         email = models.CharField(max_length=50, unique=True)
         status = models.CharField(max_length=2,
                                   choices=statusChoices, default=STUDENT)
-        profile_pic = models.CharField(max_length=200, default='N/A')
+        profile_pic = models.CharField(max_length=200,
+                                       default='N/A',
+                                       null=True,
+                                       blank=True)
         completeProfile = models.BooleanField(default=False)
 
         def get_status(self):
