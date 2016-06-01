@@ -34,4 +34,5 @@ def generate(request):
 	className = request.GET.get('className', '')
 	context = upload_file(request, className)
 	context.update(download_file(className))
-	return render(request, 'download.html', context)
+	#return render(request, 'download.html', context)
+	return render(request, 'myClassPage.html', context)
