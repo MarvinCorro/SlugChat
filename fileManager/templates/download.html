@@ -1,3 +1,4 @@
+{% if dl_form%}
 <form action="/fileManager/download" enctype="multipart/form-data" method="POST">
 {% csrf_token %}
 <p>
@@ -10,6 +11,7 @@ Please specify a file:<br>
 <input type="submit" value="Send">
 </div>
 </form>
+{%endif%}
 
 <ul>
 {% for url, name in filelist %}

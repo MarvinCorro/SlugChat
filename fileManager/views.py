@@ -11,16 +11,10 @@ from slugchat.settings import MEDIA_ROOT, MEDIA_URL
 
 def upload_file(request, className):
 	if request.method == 'POST':
-		print('is post :)')
 		form = FileForm(request.POST, request.FILES)
-		print(form)
 		if form.is_valid():
-			print('saving!')
 			form.save()
-		else:
-			print("form not valid :(")
 	else:
-		print('is not post :(')
 		form = FileForm(initial={'className':className})
 	return {'dl_form': form}
 
@@ -31,8 +25,12 @@ def download_file(className):
 
 def generate(request):
 	user = logged_in(request)
-	className = request.GET.get('className', '')
-	context = upload_file(request, className)
-	context.update(download_file(className))
-	#return render(request, 'download.html', context)
-	return render(request, 'myClassPage.html', context)
+	if user:
+		className = request.GET.get('className', '')
+		context = {}
+		if user.get_status() == 'Professor':
+			context.update(upload_file(request, className))
+		context.update(download_file(className))
+		return render(request, 'myClassPage.html', context)
+	else:
+		return HttpResponseRedirect('/')
