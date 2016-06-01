@@ -19,6 +19,7 @@ from django.conf.urls.static import static
 from . import settings
 
 urlpatterns = [
+    url(r'^fileManager/', include('fileManager.urls')),
     url(r'^class/', include('class.urls')),
     url(r'^profile/', include('userpage.urls')),
     url(r'^admin/', admin.site.urls),

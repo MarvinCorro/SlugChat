@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'fileManager.apps.FilemanagerConfig',
     'class.apps.ClassConfig',
     'userpage.apps.UserpageConfig',
     'home.apps.HomeConfig',
