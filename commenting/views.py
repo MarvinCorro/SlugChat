@@ -14,8 +14,5 @@ def index(request):
 def detail(request, file_id):
 	#fetches an object from the list of objects
 	file = get_object_or_404(File, pk=file_id)
-	return render(request, 'commenting/detail.html', {'file': file})
-	
-def post_new(request):
-        form = CommentForm()
-        return render(request, 'commenting/post_new.html', {'form': form})
+	#form = CommentForm()
+	return render(request, 'commenting/detail.html', {'file':file})

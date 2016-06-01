@@ -1,10 +1,16 @@
 <!--Name of the file-->
 <ul>
 <h1>{{ file.file }}</h1>
-<!--<a href="{% url 'commenting:post_new' file.id%}">{{"post new comment"}}</a>-->
+New Comment
+	<form method="POST" class="post-form">{% csrf_token %}
+	{{form}}
+	<button type="submit" class="save btn btn-default">Submit</button>
+	</form>
+
 <!--iterate thru every comment to the file-->
 {% for comment in file.comment_set.all %}
     <!--print comment text-->
-    <li>{{ comment.comment }}</li>
+    <li>{{ comment.comment }} </br>
+     <i>Published on: {{ comment.pub_date }}</i></li>
 {% endfor %}
 </ul>
