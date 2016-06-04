@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> cbc9aa5be72ef8146a7a4e4c7df419a8af961e47
 CKEditor SCAYT Plugin
 =====================
 
@@ -24,6 +27,7 @@ Licensed under the terms of any of the following licenses at your choice: [GPL](
 See LICENSE.md for more information.
 
 Developed in cooperation with [WebSpellChecker.net](http://www.webspellchecker.net/).
+<<<<<<< HEAD
 =======
 CKEditor SCAYT Plugin
 =====================
@@ -51,3 +55,5 @@ See LICENSE.md for more information.
 
 Developed in cooperation with [WebSpellChecker.net](http://www.webspellchecker.net/).
 >>>>>>> 4f1ae0ad453e566c79986e9676a158289fd8bc6e
+=======
+>>>>>>> cbc9aa5be72ef8146a7a4e4c7df419a8af961e47

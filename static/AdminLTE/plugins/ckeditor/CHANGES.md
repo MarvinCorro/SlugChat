@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> cbc9aa5be72ef8146a7a4e4c7df419a8af961e47
 CKEditor 4 Changelog
 ====================
 
@@ -377,6 +380,7 @@ possible. The list of relevant changes can be found in the [API Changes page of
 the CKEditor 4 documentation][1].
 
 [1]: http://docs.ckeditor.com/#!/guide/dev_api_changes "API Changes"
+<<<<<<< HEAD
 =======
 CKEditor 4 Changelog
 ====================
@@ -757,3 +761,5 @@ the CKEditor 4 documentation][1].
 
 [1]: http://docs.ckeditor.com/#!/guide/dev_api_changes "API Changes"
 >>>>>>> 4f1ae0ad453e566c79986e9676a158289fd8bc6e
+=======
+>>>>>>> cbc9aa5be72ef8146a7a4e4c7df419a8af961e47

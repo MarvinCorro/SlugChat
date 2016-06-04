@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'commenting.apps.CommentingConfig',
+    'fileManager.apps.FilemanagerConfig',
     'class.apps.ClassConfig',
     'userpage.apps.UserpageConfig',
     'home.apps.HomeConfig',

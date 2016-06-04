@@ -1,0 +1,13 @@
+<!--if there is a populated file list-->
+{% if file_list %}
+	<ul>
+	<!--iterate through each file in the file list-->
+	{% for file in file_list %}
+		<!--list each file-->
+		<li><a href="{% url 'commenting:detail' file.id%}">{{file.file}}</a></li>
+	{% endfor %}
+	</ul>
+<!--otherwise, no files to show-->
+{% else %}
+	<p>No Files are available.</p>
+{% endif %}

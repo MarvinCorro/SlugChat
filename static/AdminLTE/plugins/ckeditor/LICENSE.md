@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> cbc9aa5be72ef8146a7a4e4c7df419a8af961e47
 Software License Agreement
 ==========================
 
@@ -1263,6 +1266,7 @@ EXHIBIT A -Mozilla Public License.
      the notices in the Source Code files of the Original Code. You should
      use the text of this Exhibit A rather than the text found in the
      Original Code Source Code for Your Modifications.]
+<<<<<<< HEAD
 =======
 Software License Agreement
 ==========================
@@ -2529,3 +2533,5 @@ EXHIBIT A -Mozilla Public License.
      use the text of this Exhibit A rather than the text found in the
      Original Code Source Code for Your Modifications.]
 >>>>>>> 4f1ae0ad453e566c79986e9676a158289fd8bc6e
+=======
+>>>>>>> cbc9aa5be72ef8146a7a4e4c7df419a8af961e47

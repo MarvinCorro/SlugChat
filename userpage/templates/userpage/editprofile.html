@@ -355,20 +355,38 @@
                          <b> Update your profile </b>
                          <br>
                          {{ user_form }}
-
-                         <!--
-                         <br>
-                         <b> Register for a class </b>
-                         <br>
-                         {{ roster_form }}
-                         <br>
-                         <b> Create a course</b>
-                         <br>
-                         {{ course_form }}
-                         //-->
-
                          <input type="submit" value="Submit" />
                      </form>
+
+            <form role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Email address</label>
+                  <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Password</label>
+                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputFile">File input</label>
+                  <input type="file" id="exampleInputFile">
+
+                  <p class="help-block">Example block-level help text here.</p>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> Check me out
+                  </label>
+                </div>
+              </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+
                     </div>
                   </div>
                 </div>
@@ -400,16 +418,20 @@
       <!-- ./wrapper -->
       <!-- REQUIRED JS SCRIPTS -->
       <!-- jQuery 2.1.4 -->
+
       <script src="{% static 'AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
-      <!-- Bootstrap 3.3.5 -->
+
       <script src="{% static 'AdminLTE/bootstrap/js/bootstrap.min.js' %}"></script>
-      <!-- AdminLTE App -->
+
       <script src="{% static 'AdminLTE/dist/js/app.min.js' %}"></script>
       <script src="{% static 'js/profileScripts.js' %}"></script>
 
+<<<<<<< HEAD
       <!-- Optionally, you can add Slimscroll and FastClick plugins.
          Both of these plugins are recommended to enhance the
          user experience. Slimscroll is required when using the
          fixed layout. -->
+=======
+>>>>>>> cbc9aa5be72ef8146a7a4e4c7df419a8af961e47
    </body>
 </html>
