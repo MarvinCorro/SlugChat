@@ -5,6 +5,7 @@ from datetime import datetime
 from .forms import CommentForm
 from .models import File
 
+
 def index(request):
 	#gets a list of all the objects that are commentable
 	file_list = File.objects.all()
@@ -25,4 +26,3 @@ def detail(request, file_id):
 	else:
 		form = CommentForm()
 	return render(request, 'commenting/detail.html', {'file':file, 'form': form})
-
