@@ -16,10 +16,11 @@ def detail(request, file_id):
 	#fetches an object from the list of objects
 	file = get_object_or_404(File, pk=file_id)
 	if request.method == 'POST':
-	        form = CommentForm(request.POST)
-	        if form.is_valid():
+		form = CommentForm(request.POST)
+		if form.is_valid():
 			comment = form.save(commit=False)
-			comment.pub_date = datetime.now
+			comment.file = file
+			comment.pub_date = datetime.now()
 			comment.save()
 	else:
 		form = CommentForm()
