@@ -181,9 +181,9 @@ def deleteclass(request):
     if user is None:
         return HttpResponseRedirect('/')
 
-    if user.get_status() is not 'Professor':
-        return HttpResponse(
-                'Sorry, only professors can add classes.', status=401)
+    #if user.get_status() is not 'Professor':
+    #    return HttpResponse(
+    #            'Sorry, only professors can add classes.', status=401)
 
     roster = Roster(studentID=user)
     if request.method == 'POST':
