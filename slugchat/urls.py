@@ -20,6 +20,7 @@ from . import settings
 
 urlpatterns = [
     url(r'^comments/', include('commenting.urls')),
+    url(r'^fileManager/', include('fileManager.urls')),
     url(r'^class/', include('class.urls')),
     url(r'^profile/', include('userpage.urls')),
     url(r'^admin/', admin.site.urls),

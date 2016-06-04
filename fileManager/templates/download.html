@@ -1,0 +1,22 @@
+{% if dl_form%}
+<form action="/fileManager/download" enctype="multipart/form-data" method="POST">
+{% csrf_token %}
+<p>
+Please specify a file:<br>
+{{dl_form}}
+{{ form.errors }}
+{{ form.non_field_errors }}
+</p>
+<div>
+<input type="submit" value="Send">
+</div>
+</form>
+{%endif%}
+
+<ul>
+{% for url, name in filelist %}
+	<a href={{ url }} download>
+		<p>{{name}}</p>
+	</a>
+{% endfor %}
+</ul>
